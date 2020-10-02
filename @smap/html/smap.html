@@ -1,0 +1,279 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>smap</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-01-07"><meta name="DC.source" content="smap.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="keyword">classdef</span> smap &lt; handle <span class="comment">% % placeholder for now</span>
+    <span class="keyword">properties</span> (SetObservable = false, GetAccess = <span class="string">'public'</span>)
+        prefs
+    <span class="keyword">end</span>
+
+    <span class="keyword">methods</span>
+        <span class="keyword">function</span> obj=smap(varargin)
+
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    <span class="keyword">methods</span> (Static)
+        outref=searchForPDB(varargin);
+        varargout=PDB2EP(structureName,nmPerVoxel,varargin);
+        outref=EP2SP(structureName,edgeSize,varargin);
+        outref=getPref(handles,pref);
+        outref=def_consts();
+        [outref,rez]=mr(filename,startSlice,numSlices,varargin);
+        mw(map,filename,rez);
+        [map,s,mi,ma,av]=ReadMRC(filename,startSlice,numSlices,varargin);
+        WriteMRC(map,rez,filename);
+        outref=WriteMRCHeader(map,rez,filename,nim);
+        outref=tr(fn);
+        outref=whoami(varargin);
+        out=ts;
+        outref=rrj(inref);
+        outref=getcp(inref);
+        [nxny,peakVal,errorFlags]=maxInterpF(imref,varargin);
+        outref=cropPatchFromImage3(inref,halfDim,rowColInds);
+        outref=applyPhaseShifts(inref,shifts,varargin);
+        outref=resize_F(inref,sf,varargin);
+        outref=cutj(inref,varargin);
+        outref=extendj(inref,varargin);
+        outref=iftj(inref);
+        outref=ftj(inref);
+        outref=tileImages(imstack);
+        outref=reg2vols(inputVol,refVol,varargin);
+        outref=projView(volref);
+        outref=radialmeanIm(imref);
+        outref=radialmeanj(imref);
+        outref=mean(inref);
+        outref=particleDiameter(volref,varargin);
+        smapProps=getDatasets(filename,varargin);
+        [m,sx,units]=ReadDMFile(filename,logfile);
+        obj=gainCorr(obj);
+        obj=motionCorr(obj,varargin);
+        outref=nm(inref);
+        outref=ccf(imref,templateref);
+        obj=sumFrames(obj,varargin);
+        outref=ri(fn,varargin);
+        [inds,entries]=parseCellArray(inref,str);
+        s=getDataset(datasetName,handles);
+        putDataset(s,handles);
+        outref=parseExcelFile(varargin);
+        zpOut=zp(numIn,N,varargin);
+        obj=runCTFFind(obj);
+        [filterOut,imOut,psbg]=psdFilter(nfIm,varargin);
+        psd=getPSD(nfIm,varargin);
+        imOut=applyFilter(imref,tm,varargin);
+        [k_2d,centerPixel]=getKs(imref,aPerPix);
+        CTF=ctf(df,edgeSize,pixelSize,varargin);
+        MTFout=approxMTF(sfs,inputParams,varargin); <span class="comment">% remove extra sfs input</span>
+        ppOut=makePhasePlate(imref,varargin);
+        tw(m,fn,bps);
+        outref=checkBaseDir(inref);
+        varargout=readOutputFiles(objOrID,fileTypeOrPath);
+        obj=preprocess(obj);
+        outref=rTheta(inref);
+        [r,g,b] = polarImage(A, Ar, Ac, Nrho, Ntheta, Method, Center, Shape);
+        outref=ipcc(imref,templateref);
+        v_out=rotate3dVector(R,v);
+        varargout=gpuwhos;
+        [xs,ys]=plotSH(peakVals,varargin);
+        qFig(fname,varargin);
+        outref=padForFFT(varargin);
+        outref=templates(obj,qref,dfs,varargin);
+        avl(varargin);
+        ahl(varargin);
+        [ti,templateIm]=makeTemplateStack(nfIm,varargin);<span class="comment">%templates,ss);</span>
+        [qOut,xyz_sub,xyz_rnap]=getIcos(qBest,varargin);
+        [xyz_sub,xyz_rnap]=icos(varargin);
+        [ccOut,peaks]=ccff(imref,templateref,varargin);
+        p3do(xyzref,varargin);
+        p3d(xyzref,varargin);
+        p3dr(xyzref,varargin);
+        p3a(varargin);
+        outref=templates_gpu(obj,qref,dfs,varargin);
+        mask=cosMask(imSize,maskEdges,aPerPix);
+        qOut=bumpQ(qIn,qBump);
+        distInDeg=measureQD(q1,q2,varargin);
+        distInDeg_array=pairwiseQD(q1,q2);
+        [r,qOut]=frealign2smap(ori);
+        [ori,qOut]=smap2frealign(r);
+        obj_out=getDots(obj,varargin);
+        thr=plotSHH(bins,N,varargin);
+
+        <span class="comment">% % not yet incorporated:</span>
+<span class="comment">%         probe(datasetref,modelref,varargin);</span>
+<span class="comment">%         varargout=smappoi(fileref,objectFile);</span>
+<span class="comment">%         varargout=parseInputFile(obj);</span>
+
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+classdef smap < handle % % placeholder for now
+    properties (SetObservable = false, GetAccess = 'public')
+        prefs
+    end
+    
+    methods
+        function obj=smap(varargin)
+            
+        end
+    end
+        
+    methods (Static)
+        outref=searchForPDB(varargin);
+        varargout=PDB2EP(structureName,nmPerVoxel,varargin);
+        outref=EP2SP(structureName,edgeSize,varargin);
+        outref=getPref(handles,pref);
+        outref=def_consts();
+        [outref,rez]=mr(filename,startSlice,numSlices,varargin);
+        mw(map,filename,rez);
+        [map,s,mi,ma,av]=ReadMRC(filename,startSlice,numSlices,varargin);
+        WriteMRC(map,rez,filename);
+        outref=WriteMRCHeader(map,rez,filename,nim);
+        outref=tr(fn);
+        outref=whoami(varargin);
+        out=ts;
+        outref=rrj(inref);
+        outref=getcp(inref);
+        [nxny,peakVal,errorFlags]=maxInterpF(imref,varargin);
+        outref=cropPatchFromImage3(inref,halfDim,rowColInds);
+        outref=applyPhaseShifts(inref,shifts,varargin);
+        outref=resize_F(inref,sf,varargin);
+        outref=cutj(inref,varargin);
+        outref=extendj(inref,varargin);
+        outref=iftj(inref);
+        outref=ftj(inref);
+        outref=tileImages(imstack);
+        outref=reg2vols(inputVol,refVol,varargin);
+        outref=projView(volref);
+        outref=radialmeanIm(imref);
+        outref=radialmeanj(imref);
+        outref=mean(inref);
+        outref=particleDiameter(volref,varargin);
+        smapProps=getDatasets(filename,varargin);
+        [m,sx,units]=ReadDMFile(filename,logfile);
+        obj=gainCorr(obj);
+        obj=motionCorr(obj,varargin);
+        outref=nm(inref);
+        outref=ccf(imref,templateref);
+        obj=sumFrames(obj,varargin);
+        outref=ri(fn,varargin);
+        [inds,entries]=parseCellArray(inref,str);
+        s=getDataset(datasetName,handles);
+        putDataset(s,handles);
+        outref=parseExcelFile(varargin);
+        zpOut=zp(numIn,N,varargin);
+        obj=runCTFFind(obj);
+        [filterOut,imOut,psbg]=psdFilter(nfIm,varargin);
+        psd=getPSD(nfIm,varargin);
+        imOut=applyFilter(imref,tm,varargin);
+        [k_2d,centerPixel]=getKs(imref,aPerPix);
+        CTF=ctf(df,edgeSize,pixelSize,varargin);
+        MTFout=approxMTF(sfs,inputParams,varargin); % remove extra sfs input
+        ppOut=makePhasePlate(imref,varargin);
+        tw(m,fn,bps);
+        outref=checkBaseDir(inref);
+        varargout=readOutputFiles(objOrID,fileTypeOrPath);
+        obj=preprocess(obj);
+        outref=rTheta(inref);
+        [r,g,b] = polarImage(A, Ar, Ac, Nrho, Ntheta, Method, Center, Shape);
+        outref=ipcc(imref,templateref);
+        v_out=rotate3dVector(R,v);
+        varargout=gpuwhos;
+        [xs,ys]=plotSH(peakVals,varargin);
+        qFig(fname,varargin);
+        outref=padForFFT(varargin);
+        outref=templates(obj,qref,dfs,varargin);
+        avl(varargin);
+        ahl(varargin);
+        [ti,templateIm]=makeTemplateStack(nfIm,varargin);%templates,ss);
+        [qOut,xyz_sub,xyz_rnap]=getIcos(qBest,varargin);
+        [xyz_sub,xyz_rnap]=icos(varargin);
+        [ccOut,peaks]=ccff(imref,templateref,varargin);
+        p3do(xyzref,varargin);
+        p3d(xyzref,varargin);
+        p3dr(xyzref,varargin);
+        p3a(varargin);
+        outref=templates_gpu(obj,qref,dfs,varargin);
+        mask=cosMask(imSize,maskEdges,aPerPix);
+        qOut=bumpQ(qIn,qBump);
+        distInDeg=measureQD(q1,q2,varargin);
+        distInDeg_array=pairwiseQD(q1,q2);
+        [r,qOut]=frealign2smap(ori);
+        [ori,qOut]=smap2frealign(r);
+        obj_out=getDots(obj,varargin);
+        thr=plotSHH(bins,N,varargin); 
+
+        % % not yet incorporated:
+%         probe(datasetref,modelref,varargin);
+%         varargout=smappoi(fileref,objectFile);
+%         varargout=parseInputFile(obj);
+                
+    end        
+end
+
+
+##### SOURCE END #####
+--></body></html>
