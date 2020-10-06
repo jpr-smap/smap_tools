@@ -101,10 +101,7 @@ end;
 % % for backwards compatibility (10.05.20/jpr):
 if( isempty(params.structureFile) & ~isempty(params.PDBFile) )
     params.structureFile=params.PDBFile;
-elseif( isempty(params.structureFile) & ~isempty(params.modelFile) )
-    params.structureFile=params.modelFile;
 end;
-
 if( ~isempty(params.structureFile) )
     [~,~,ext]=fileparts(params.structureFile)
     switch ext
@@ -2003,7 +2000,7 @@ function fn_SP=smappoi_calculate_SP(params,jobNum);
 
 global gdev params
 
-[~,fn,ext]=fileparts(params.structureFile);
+[~,fn,ext]=fileparts(params.PDBFile);
 fn_len=min([length(fn) 4]);
 scratchDir=fullfile(params.outputDir,['scratch_' fn(1:fn_len)]);
 if( exist(params.outputDir,'dir')~=7 )
@@ -2036,7 +2033,7 @@ outputDir=[params.outputDir '/'];
 inc=1;
 cc=smap.def_consts();
 baseDir=[pwd '/'];
-fn_pdb=params.structureFile;
+fn_pdb=params.PDBFile;
 
 [~,fn,ext]=fileparts(fn_pdb);
 switch ext
@@ -2204,7 +2201,7 @@ end;
 if( ~isempty( params.modelName ) )
     fn=strtrim(char(params.modelName));
 else
-    [~,fn]=fileparts(params.structureFile);
+    [~,fn]=fileparts(params.PDBFile);
 end;
 
 fn_out=[searchDir fn '_EP_' fNumPadded '.mrc'];
@@ -2220,7 +2217,7 @@ nextFile=1;
 
 if( jobNum==params.nCores )
     nFilesExpected=params.nCores;%*2;
-    fn_pdb=params.structureFile;
+    fn_pdb=params.PDBFile;
     
     while 1
         fprintf(fidLog,'Looking for %i %s_EP files...\n',nFilesExpected,fn);
